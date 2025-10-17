@@ -170,9 +170,9 @@ Aplikasi manajemen keuangan SPP multi-tenant dengan desain elegan, mewah, dewasa
 │ • Headline & bullets    │ │ Logo + "Masuk ke    │ │
 │ • Abstract illustration │ │ SetoranPro"         │ │
 │ • Value props:          │ │                     │ │
-│   - Aman               │ │ [Email/HP Field]    │ │
-│   - Cepat              │ │ [Password Field]    │ │
-│   - Multi-Tenant       │ │ □ Ingat saya        │ │
+│   - Aman                │ │ [Email/HP Field]    │ │
+│   - Cepat               │ │ [Password Field]    │ │
+│   - Multi-Tenant        │ │ □ Ingat saya        │ │
 │                         │ │ [Masuk Button]      │ │
 │                         │ │ Link: Lupa pass?    │ │
 │                         │ └─────────────────────┘ │
