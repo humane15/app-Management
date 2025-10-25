@@ -10,6 +10,78 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+
+
+model Kelas {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  siswa     Siswa[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Siswa {
+  id         Int       @id @default(autoincrement())
+  nis        String    @unique
+  nama       String
+  kelasId    Int
+  kelas      Kelas     @relation(fields: [kelasId], references: [id])
+  waliSantri WaliSantri?
+  tagihan    Tagihan[]
+  pembayaran Pembayaran[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model WaliSantri {
+  id        Int     @id @default(autoincrement())
+  nama      String
+  telepon   String?
+  alamat    String?
+  siswaId   Int  @unique
+  siswa     Siswa @relation(fields: [siswaId], references: [id])
+}
+
+model JenisSetoran {
+  id        Int      @id @default(autoincrement())
+  kode      String   @unique   // contoh: SPP, KAT, PEMB
+  nama      String   // contoh: SPP Bulanan, Uang Katering, Uang Pembangunan
+  aktif     Boolean  @default(true)
+  tagihan   Tagihan[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tagihan {
+  id            Int          @id @default(autoincrement())
+  siswaId       Int
+  siswa         Siswa        @relation(fields: [siswaId], references: [id])
+  jenisSetoranId Int
+  jenisSetoran  JenisSetoran @relation(fields: [jenisSetoranId], references: [id])
+  deskripsi     String?
+  nominal       Decimal      @db.Decimal(12,2)
+  jatuhTempo    DateTime?
+  lunas         Boolean      @default(false)
+  pembayaran    Pembayaran[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Pembayaran {
+  id         Int      @id @default(autoincrement())
+  siswaId    Int
+  siswa      Siswa    @relation(fields: [siswaId], references: [id])
+  tagihanId  Int?
+  tagihan    Tagihan? @relation(fields: [tagihanId], references: [id])
+  tanggal    DateTime @default(now())
+  metode     String?  // cash, transfer, dll.
+  jumlah     Decimal  @db.Decimal(12,2)
+  keterangan String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
